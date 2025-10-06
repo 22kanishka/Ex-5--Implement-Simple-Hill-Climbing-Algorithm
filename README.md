@@ -1,6 +1,6 @@
 <h1>ExpNo 5 : Implement Simple Hill Climbing Algorithm</h1> 
-<h3>Name:             </h3>
-<h3>Register Number:             </h3>
+<h3>Name:  KANISHKA P           </h3>
+<h3>Register Number:  2305001011           </h3>
 <H3>Aim:</H3>
 <p>Implement Simple Hill Climbing Algorithm and Generate a String by Mutating a Single Character at each iteration </p>
 <h2> Theory: </h2>
@@ -10,91 +10,63 @@ Feedback is provided in terms of heuristic function
 
 
 <h2>Algorithm:</h2>
-<p>
-<ol>
- <li> Evaluate the initial state.If it is a goal state then return it and quit. Otherwise, continue with initial state as current state.</li> 
-<li>Loop until a solution is found or there are no new operators left to be applied in current state:
-<ul><li>Select an operator that has not yet been applied to the current state and apply it to produce a new state</li>
-<li>Evaluate the new state:
-  <ul>
-<li>if it is a goal state, then return it and quit</li>
-<li>if it is not a goal state but better than current state then make new state as current state</li>
-<li>if it is not better than current state then continue in the loop</li>
-    </ul>
-</li>
-</ul>
-</li>
-</ol>
 
-</p>
-<hr>
-<h3> Steps Applied:</h3>
-<h3>Step-1</h3>
-<p> Generate Random String of the length equal to the given String</p>
-<h3>Step-2</h3>
-<p>Mutate the randomized string each character at a time</p>
-<h3>Step-3</h3>
-<p> Evaluate the fitness function or Heuristic Function</p>
-<h3>Step-4:</h3>
-<p> Lopp Step -2 and Step-3  until we achieve the score to be Zero to achieve Global Minima.</p>
+1.Choose a starting point (initial solution).
+
+2.Calculate its value using the objective function f(x).
+
+3.Generate a neighbor (small change, e.g., move left or right).
+
+4.Compare values:
+
+  If the neighbor is better, move to it.
+
+  Otherwise, stay at the current point.
+
+5.Repeat steps 3–4 until the maximum number of iterations is reached, then return the best solution.
 
 ## PROGRAM
-```python
+```
 import random
-import string
-def generate_random_solution(answer):
-    l=len(answer)
-    return [random.choice(string.printable) for _ in range(l)]
-def evaluate(solution,answer):
-    print(solution)
-    target=list(answer)
-    diff=0
-    for i in range(len(target)):
-        s=solution[i]
-        t=target[i]
-        #to calculate the "difference" between two strings, character by character.
-        #ord(s) - ord(t) calculates the difference between the ASCII values of the characters s and t.
-         #abs() takes the absolute value of this difference to ensure that it is non-negative. This is important because the difference could be negative if s is less than t in terms of ASCII value.
-         #The absolute value ensures that the difference is always positive or zero.
-        diff += abs(ord(s) - ord(t))    return diff
-def mutate_solution(solution):
-    ind=random.randint(0,len(solution)-1)
-    solution[ind]=random.choice(string.printable)
-    return solution
-def SimpleHillClimbing():
-    answer="Artificial Intelligence"
-    best=generate_random_solution(answer)
-    best_score=evaluate(best,answer)
-    while True:
-       print("Score:", best_score, " Solution: ", "".join(best))  
-       if best_score == 0:
-           break
-       new_solution = mutate_solution(list(best))
-       score = evaluate(new_solution, answer)
-       if score < best_score:
-           best = new_solution
-           best_score = score
-SimpleHillClimbing()
+
+# Objective function (we want to maximize this)
+def f(x):
+    return -(x - 3)**2 + 9  # Peak at x = 3
+
+def hill_climb(start, max_iterations, step_size):
+    current = start
+    for i in range(max_iterations):
+        # Generate a neighbor (move left or right by step_size)
+        neighbor = current + random.choice([-step_size, step_size])
+        
+        # If neighbor is better, move there
+        if f(neighbor) > f(current):
+            current = neighbor
+    
+    return current, f(current)
+
+# Run hill climbing
+best_x, best_value = hill_climb(start=random.uniform(-10, 10), 
+                                max_iterations=1000, 
+                                step_size=0.1)
+
+print("Best solution x:", best_x)
+print("Best value f(x):", best_value)
 ```
 
-<hr>
-<h2>Sample Input and Output</h2>
-<h2>Sample String:</h2> Artificial Intelligence
-<h2>Output:</h2>
-Score: 643  Solution :  8RzF:oG ]%;CPORRMe!zGvk<br>
-Score: 609  Solution :  8RzF:oG ]%;CPqRRMe!zGvk<br>
-Score: 604  Solution :  8RzF:oG ]%;CPqRRMe!zGqk<br>
-Score: 594  Solution :  8RzF:oG ]%;CPqRRWe!zGqk<br>
-Score: 551  Solution :  8RzF:oGK]%;CPqRRWe!zGqk<br>
-Score: 551  Solution :  8RzF:oGK]%;CPqRRWe!zGqk<br>
-Score: 551  Solution :  8RzF:oGK]%;CPqRRWe!zGqk<br>
-Score: 551  Solution :  8RzF:oGK]%;CPqRRWe!zGqk<br>
-Score: 551  Solution :  8RzF:oGK]%;CPqRRWe!zGqk<br>
-....................................................<br>
-..................................................<br>
-................................................<br>
-Score: 1  Solution :  Artificial Intelligencf<br>
-Score: 1  Solution :  Artificial Intelligencf<br>
-Score: 1  Solution :  Artificial Intelligencf<br>
-Score: 1  Solution :  Artificial Intelligencf<br>
-Score: 0  Solution :  Artificial Intelligence<br>
+<h2>Sample Input</h2>
+
+```
+Start = -6.52
+max_iterations = 1000
+step_size = 0.1
+```
+<h2>Sample Output </h2>
+
+<img width="369" height="48" alt="image" src="https://github.com/user-attachments/assets/274061d3-85b0-482b-9c30-800f458e86f9" />
+
+
+<h2>Result </h2>
+
+Thus the given program for Hill Climbing Algorithm was implemented and executed successfully
+
